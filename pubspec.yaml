@@ -1,0 +1,26 @@
+name: journal
+description: A new Flutter project.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.11.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  shared_preferences: ^0.5.4
+  path_provider: ^1.4.5
+  sqflite: ^1.1.8
+  intl: ^0.17.0
+
+  cupertino_icons: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/schema_1.sql.txt
