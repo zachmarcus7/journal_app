@@ -34,7 +34,7 @@ class JournalScaffoldState extends State<JournalScaffold> {
         brightness: brightness
       ),
       home: Scaffold(
-        endDrawer: endDrawer,
+        endDrawer: CustomDrawer(),
         appBar: AppBar(
           title: Text(widget.title),
           centerTitle: true,
@@ -59,7 +59,15 @@ class JournalScaffoldState extends State<JournalScaffold> {
 
   void setBrightness() {
     AppState appState = context.findAncestorStateOfType<AppState>();
-    String brightnessLevel = appState.widget.preferences.getString('brightness');
+    String brightnessLevel;
+    if (appState.widget.preferences == null){
+      brightnessLevel = null;
+    } else {
+      brightnessLevel = appState.widget.preferences.getString('brightness');
+    }
+
+    //String brightnessLevel = appState.widget.preferences.getString('brightness');
+
     if (brightnessLevel != null) {
       if (brightnessLevel == 'light') {
         setState( () {

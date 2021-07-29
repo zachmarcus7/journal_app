@@ -12,7 +12,13 @@ class CustomDrawer extends StatefulWidget {
 
 class _CustomDrawerState extends State<CustomDrawer> {
 
-  double sliderValue = 1.0;
+  bool sliderValue;
+
+  @override
+  void initState() {
+    super.initState();
+    initSliderValue();
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -25,32 +31,31 @@ class _CustomDrawerState extends State<CustomDrawer> {
               child: Text('Settings')
             )
           ),
-          ListTile(
-            leading: Text('Dark Mode'),
-            trailing: Container(
-              width: MediaQuery.of(context).size.width * .2,
-              child: Slider(
-                value: sliderValue,
-                divisions: 1,
-                max: 2.0,
-                min: 1.0,
-                onChanged: (double newSliderValue) {
-                    JournalScaffoldState scaffoldState = context.findAncestorStateOfType<JournalScaffoldState>();
-                    AppState appState = context.findAncestorStateOfType<AppState>();
-                    newSliderValue == 1.0 ? appState.widget.preferences.setString('brightness', 'light') :
-                      appState.widget.preferences.setString('brightness', 'dark');
-                    setState( () {
-                      sliderValue = newSliderValue;
-                      scaffoldState.setBrightness();
-                    });
-                },
-              )
-            ),
+          SwitchListTile(
+            title: Text('Dark Mode'),
+            value: sliderValue,
+            onChanged: (bool newSliderValue) {
+              JournalScaffoldState scaffoldState = context.findAncestorStateOfType<JournalScaffoldState>();
+              AppState appState = context.findAncestorStateOfType<AppState>();
+              newSliderValue ? appState.widget.preferences.setString('brightness', 'dark') :
+                               appState.widget.preferences.setString('brightness', 'light');
+              setState( () {
+                sliderValue = newSliderValue;
+                scaffoldState.setBrightness();
+              });
+            }
           )
         ]
       )
     );
   }
   
+  void initSliderValue() {
+    setState((){
+      AppState appState = context.findAncestorStateOfType<AppState>();
+      String dbValue = appState.widget.preferences.getString('brightness');
+      sliderValue = dbValue == 'dark' ? true : false;
+    });
+  }
 
 }

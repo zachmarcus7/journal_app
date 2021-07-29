@@ -125,9 +125,9 @@ class _NewEntryState extends State<NewEntry> {
                           final databaseManager = DatabaseManager.getInstance();
                           journalEntryFields.date = DateFormat('yyyy-MM-dd').format(DateTime.now()).toString();
                           databaseManager.saveJournalEntry(dto: journalEntryFields);
-                          print(journalEntryFields.toString());
+                          AppState appState = context.findAncestorStateOfType<AppState>();
                           Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => App())
+                            MaterialPageRoute(builder: (context) => App(preferences: appState.widget.preferences))
                           );                                      
                         }
                       },
