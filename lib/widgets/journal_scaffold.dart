@@ -8,7 +8,7 @@ class JournalScaffold extends StatefulWidget {
   String title;
   Widget body;
 
-  JournalScaffold({this.title, this.body});
+  JournalScaffold({required this.title, required this.body});
 
   @override
   JournalScaffoldState createState() => JournalScaffoldState();
@@ -17,7 +17,7 @@ class JournalScaffold extends StatefulWidget {
 
 class JournalScaffoldState extends State<JournalScaffold> {
 
-  Brightness brightness;
+  late Brightness brightness;
 
   @override
   void initState() {
@@ -58,15 +58,15 @@ class JournalScaffoldState extends State<JournalScaffold> {
   }
 
   void setBrightness() {
-    AppState appState = context.findAncestorStateOfType<AppState>();
+    AppState appState = context.findAncestorStateOfType<AppState>() as AppState;
     String brightnessLevel;
     if (appState.widget.preferences == null){
-      brightnessLevel = null;
+      brightnessLevel = 'null';
     } else {
-      brightnessLevel = appState.widget.preferences.getString('brightness');
+      brightnessLevel = appState.widget.preferences.getString('brightness') as String;
     }
 
-    if (brightnessLevel != null) {
+    if (brightnessLevel != 'null') {
       if (brightnessLevel == 'light') {
         setState( () {
           brightness = Brightness.light;

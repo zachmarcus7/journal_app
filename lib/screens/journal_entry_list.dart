@@ -6,9 +6,9 @@ import 'package:journal/screens/journal_entry.dart';
 
 class JournalEntryList extends StatefulWidget {
 
-  final Journal journal;
+  Journal? journal;
 
-  JournalEntryList({this.journal});
+  JournalEntryList({required this.journal});
 
   @override
   _JournalEntryListState createState() => _JournalEntryListState();
@@ -19,6 +19,11 @@ class _JournalEntryListState extends State<JournalEntryList> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.journal == null) {
+      return Center(
+        child: CircularProgressIndicator()
+      );
+    }
     return OrientationBuilder(builder: (context, orientation) {
       return orientation == Orientation.portrait ? VerticalLayout(journal: widget.journal) : HorizontalLayout(journal: widget.journal);
     });
@@ -26,13 +31,14 @@ class _JournalEntryListState extends State<JournalEntryList> {
 
   Widget layoutDecider(BuildContext context, BoxConstraints constraints) =>
     constraints.maxWidth < 500 ? VerticalLayout(journal: widget.journal) : HorizontalLayout(journal: widget.journal);
+
 }
 
 class VerticalLayout extends StatefulWidget {
 
-  final Journal journal;
+  Journal? journal;
 
-  VerticalLayout({this.journal});
+  VerticalLayout({required this.journal});
 
   @override
   _VerticalLayoutState createState() => _VerticalLayoutState();
@@ -47,18 +53,18 @@ class _VerticalLayoutState extends State<VerticalLayout> {
       alignment: AlignmentDirectional.bottomEnd,
       children: [
         ListView.builder(
-          itemCount: widget.journal.entries.length,
+          itemCount: widget.journal!.entries.length,
           itemBuilder: (context, index) {
             return ListTile(
               trailing: Icon(Icons.more_horiz),
-              title: Text(widget.journal.entries[index].title),
-              subtitle: Text(widget.journal.entries[index].date),
+              title: Text(widget.journal!.entries[index].title),
+              subtitle: Text(widget.journal!.entries[index].date),
               onTap:  () => { 
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => JournalEntry(
-                    title: widget.journal.entries[index].title,
-                    body: widget.journal.entries[index].body,
-                    date: widget.journal.entries[index].date
+                    title: widget.journal!.entries[index].title,
+                    body: widget.journal!.entries[index].body,
+                    date: widget.journal!.entries[index].date
                   ))
                 )
               }
@@ -91,9 +97,9 @@ class _VerticalLayoutState extends State<VerticalLayout> {
 
 class HorizontalLayout extends StatefulWidget {
 
-  final Journal journal;
+  Journal? journal;
 
-  HorizontalLayout({this.journal});
+  HorizontalLayout({required this.journal});
 
   @override
   _HorizontalLayoutState createState() => _HorizontalLayoutState();
@@ -113,16 +119,16 @@ class _HorizontalLayoutState extends State<HorizontalLayout> {
           flex: 1,
           fit: FlexFit.tight,
           child: ListView.builder(   
-            itemCount: widget.journal.entries.length,
+            itemCount: widget.journal!.entries.length,
             itemBuilder: (context, index) {
               return ListTile(
                 trailing: Icon(Icons.more_horiz),
-                title: Text(widget.journal.entries[index].title),
-                subtitle: Text(widget.journal.entries[index].date),
+                title: Text(widget.journal!.entries[index].title),
+                subtitle: Text(widget.journal!.entries[index].date),
                 onTap:  () { 
                   setState(() {
-                    currentTitle = widget.journal.entries[index].title;
-                    currentBody = widget.journal.entries[index].body;
+                    currentTitle = widget.journal!.entries[index].title;
+                    currentBody = widget.journal!.entries[index].body;
                   });
                 }
               );

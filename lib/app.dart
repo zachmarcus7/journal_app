@@ -14,7 +14,7 @@ class App extends StatefulWidget {
 
   final SharedPreferences preferences;
 
-  App({Key key, this.preferences}) : super(key: key);
+  App({Key? key, required this.preferences}) : super(key: key);
 
   @override
   AppState createState() => AppState();
@@ -23,7 +23,7 @@ class App extends StatefulWidget {
 
 class AppState extends State<App> {
 
-  Journal journal;
+  Journal? journal;
 
   @override
   void initState() {
@@ -55,7 +55,7 @@ class AppState extends State<App> {
         body: Center(child: CircularProgressIndicator())
       );
     } else {
-      if (journal.isEmpty()) {
+      if (journal!.isEmpty()) {
         return JournalScaffold(
           title: 'Welcome',
           body: Welcome()
