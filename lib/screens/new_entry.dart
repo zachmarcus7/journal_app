@@ -8,8 +8,6 @@ import 'package:journal/widgets/drawer.dart';
 
 class NewEntry extends StatefulWidget {
 
-  static const routeName = 'new_entry';
-
   @override
   _NewEntryState createState() => _NewEntryState();
 }
@@ -76,7 +74,7 @@ class _NewEntryState extends State<NewEntry> {
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: DropdownButtonFormField<int>(
                   value: selectedValue,
-                  items: ratingMenuItems(maxRating: 10),
+                  items: ratingMenuItems(maxRating: 4),
                   onChanged: (menuItem) {
                     setState(() => selectedValue = menuItem);
                   },
@@ -123,7 +121,8 @@ class _NewEntryState extends State<NewEntry> {
                         if (formKey.currentState.validate()) {
                           formKey.currentState.save();
                           final databaseManager = DatabaseManager.getInstance();
-                          journalEntryFields.date = DateFormat('yyyy-MM-dd').format(DateTime.now()).toString();
+                          journalEntryFields.date = DateFormat.yMMMMd('en_US').format(DateTime.now()).toString();
+                          print(journalEntryFields.date);
                           databaseManager.saveJournalEntry(dto: journalEntryFields);
                           AppState appState = context.findAncestorStateOfType<AppState>();
                           Navigator.of(context).push(

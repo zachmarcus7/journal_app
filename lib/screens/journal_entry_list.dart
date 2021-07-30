@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';  
 import 'new_entry.dart';
 import 'package:journal/models/journal.dart';
-import 'package:journal/widgets/journal_scaffold.dart';
+import 'package:journal/screens/journal_entry.dart';
+
 
 class JournalEntryList extends StatefulWidget {
 
-  Journal journal;
+  final Journal journal;
 
   JournalEntryList({this.journal});
 
@@ -28,8 +28,16 @@ class _JournalEntryListState extends State<JournalEntryList> {
             return ListTile(
               trailing: Icon(Icons.more_horiz),
               title: Text(widget.journal.entries[index].title),
-              subtitle: Text(widget.journal.entries[index].date)
-              //onTap: Navigator.of(context).pushNamed()
+              subtitle: Text(widget.journal.entries[index].date),
+              onTap:  () => { 
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => JournalEntry(
+                    title: widget.journal.entries[index].title,
+                    body: widget.journal.entries[index].body,
+                    date: widget.journal.entries[index].date
+                  ))
+                )
+              }
             );
         }),  
         Container(
