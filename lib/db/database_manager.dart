@@ -9,10 +9,10 @@ class DatabaseManager {
   static const String SQL_INSERT = 'INSERT INTO journal_entries(title, body, rating, date) VALUES(?, ?, ?, ?);';
   static const String SQL_SELECT = 'SELECT * FROM journal_entries;';
 
-  static DatabaseManager _instance;
+  static late DatabaseManager _instance;
   final Database db;
 
-  DatabaseManager._({Database database}) : db = database;
+  DatabaseManager._({required Database database}) : db = database;
 
 
   factory DatabaseManager.getInstance() {
@@ -35,7 +35,7 @@ class DatabaseManager {
     await db.execute(sql);
   }
 
-  void saveJournalEntry({JournalEntryDTO dto}) {
+  void saveJournalEntry({required JournalEntryDTO dto}) {
     db.transaction( (txn) async {
       await txn.rawInsert(SQL_INSERT,
         [dto.title, dto.body, dto.rating, dto.date]

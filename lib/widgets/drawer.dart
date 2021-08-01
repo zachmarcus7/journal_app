@@ -12,7 +12,7 @@ class CustomDrawer extends StatefulWidget {
 
 class _CustomDrawerState extends State<CustomDrawer> {
 
-  bool sliderValue;
+  late bool sliderValue;
 
   @override
   void initState() {
@@ -35,8 +35,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
             title: Text('Dark Mode'),
             value: sliderValue,
             onChanged: (bool newSliderValue) {
-              JournalScaffoldState scaffoldState = context.findAncestorStateOfType<JournalScaffoldState>();
-              AppState appState = context.findAncestorStateOfType<AppState>();
+              JournalScaffoldState scaffoldState = context.findAncestorStateOfType<JournalScaffoldState>() as JournalScaffoldState;
+              AppState appState = context.findAncestorStateOfType<AppState>() as AppState;
               newSliderValue ? appState.widget.preferences.setString('brightness', 'dark') :
                                appState.widget.preferences.setString('brightness', 'light');
               setState( () {
@@ -52,8 +52,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
   
   void initSliderValue() {
     setState((){
-      AppState appState = context.findAncestorStateOfType<AppState>();
-      String dbValue = appState.widget.preferences.getString('brightness');
+      AppState appState = context.findAncestorStateOfType<AppState>() as AppState;
+      String dbValue = appState.widget.preferences.getString('brightness') as String;
       sliderValue = dbValue == 'dark' ? true : false;
     });
   }

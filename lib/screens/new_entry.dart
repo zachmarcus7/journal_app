@@ -15,8 +15,8 @@ class NewEntry extends StatefulWidget {
 class _NewEntryState extends State<NewEntry> {
 
   final formKey = GlobalKey<FormState>();
-  final journalEntryFields = JournalEntryDTO();
-  int selectedValue = 1;
+  final journalEntryFields = JournalEntryDTO(title: '', body: '', rating: 1, date: '');
+  int? selectedValue = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -58,12 +58,14 @@ class _NewEntryState extends State<NewEntry> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               journalEntryForm(
+                context: context,
                 label: 'Title',
                 errorMessage: 'Please enter a Title',
                 onSaved: (value) {journalEntryFields.title = value;},
                 type: TextInputType.text
               ),
               journalEntryForm(
+                context: context,
                 label: 'Body',
                 errorMessage: 'Please enter a Body',
                 onSaved: (value) {journalEntryFields.body = value;},
@@ -91,7 +93,7 @@ class _NewEntryState extends State<NewEntry> {
                       return null;
                     }
                   },
-                  onSaved: (value) {journalEntryFields.rating = value;},
+                  onSaved: (value) {journalEntryFields.rating = value as int;},
                 )
               ),
               Row(
@@ -118,13 +120,13 @@ class _NewEntryState extends State<NewEntry> {
                         overlayColor: MaterialStateProperty.all(Colors.blueGrey)
                       ),
                       onPressed: () async {
-                        if (formKey.currentState.validate()) {
-                          formKey.currentState.save();
+                        if (formKey.currentState!.validate()) {
+                          formKey.currentState!.save();
                           final databaseManager = DatabaseManager.getInstance();
                           journalEntryFields.date = DateFormat.yMMMMd('en_US').format(DateTime.now()).toString();
                           print(journalEntryFields.date);
                           databaseManager.saveJournalEntry(dto: journalEntryFields);
-                          AppState appState = context.findAncestorStateOfType<AppState>();
+                          AppState appState = context.findAncestorStateOfType<AppState>() as AppState;
                           Navigator.of(context).push(
                             MaterialPageRoute(builder: (context) => App(preferences: appState.widget.preferences))
                           );                                      
@@ -142,7 +144,7 @@ class _NewEntryState extends State<NewEntry> {
     );
   }
 
-  Widget journalEntryForm({BuildContext context, label, errorMessage, onSaved, type}) {
+  Widget journalEntryForm({required BuildContext context, label, errorMessage, onSaved, type}) {
     return Container(
       margin: EdgeInsets.all(5.0),
       child: TextFormField(
@@ -155,7 +157,7 @@ class _NewEntryState extends State<NewEntry> {
         ),
         onSaved: onSaved,
         validator: (value) {
-          if (value.isEmpty) {
+          if (value!.isEmpty) {
             return errorMessage;
           } else {
             return null;
@@ -165,7 +167,7 @@ class _NewEntryState extends State<NewEntry> {
     );
   }
 
-  List<DropdownMenuItem<int>> ratingMenuItems({int maxRating}) {
+  List<DropdownMenuItem<int>> ratingMenuItems({required int maxRating}) {
     return List<DropdownMenuItem<int>>.generate(maxRating, (i) {
       return DropdownMenuItem<int>(value: i + 1, child: Text('${i + 1}'));
     });

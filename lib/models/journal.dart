@@ -5,7 +5,7 @@ class Journal {
 
   List<JournalEntryDTO> entries;
 
-  Journal({this.entries}); 
+  Journal({required this.entries}); 
 
   bool isEmpty() {
     if (entries.length == 0)

@@ -5,7 +5,7 @@ class JournalEntryDTO {
   String date;
   int rating;
 
-  JournalEntryDTO({this.title, this.body, this.date, this.rating});
+  JournalEntryDTO({required this.title, required this.body, required this.date, required this.rating});
 
   String toString() {
     return 'Title: $title, Body: $body, Time: $date, Rating: $rating';

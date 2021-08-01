@@ -8,7 +8,7 @@ class JournalEntry extends StatefulWidget {
   String title;
   String body;
 
-  JournalEntry({this.date, this.title, this.body});
+  JournalEntry({required this.date, required this.title, required this.body});
 
   @override
   JournalEntryState createState() => JournalEntryState();
