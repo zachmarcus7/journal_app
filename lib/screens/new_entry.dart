@@ -73,7 +73,7 @@ class _NewEntryState extends State<NewEntry> {
               ),
               Container(
                 margin: EdgeInsets.all(5.0),
-                width: MediaQuery.of(context).size.width * 0.9,
+                width: getOrientation(context),
                 child: DropdownButtonFormField<int>(
                   value: selectedValue,
                   items: ratingMenuItems(maxRating: 4),
@@ -81,11 +81,11 @@ class _NewEntryState extends State<NewEntry> {
                     setState(() => selectedValue = menuItem);
                   },
                   decoration:
-                      InputDecoration(
-                        labelText: 'Rating', 
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                        ),
+                    InputDecoration(
+                      labelText: 'Rating', 
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                      ),
                   validator: (value) {
                     if (value == null) {
                       return 'Please select a Rating';
@@ -124,7 +124,6 @@ class _NewEntryState extends State<NewEntry> {
                           formKey.currentState!.save();
                           final databaseManager = DatabaseManager.getInstance();
                           journalEntryFields.date = DateFormat.yMMMMd('en_US').format(DateTime.now()).toString();
-                          print(journalEntryFields.date);
                           databaseManager.saveJournalEntry(dto: journalEntryFields);
                           AppState appState = context.findAncestorStateOfType<AppState>() as AppState;
                           Navigator.of(context).push(
@@ -171,6 +170,11 @@ class _NewEntryState extends State<NewEntry> {
     return List<DropdownMenuItem<int>>.generate(maxRating, (i) {
       return DropdownMenuItem<int>(value: i + 1, child: Text('${i + 1}'));
     });
+  }
+
+  double getOrientation(BuildContext context) {
+    var query = MediaQuery.of(context);
+    return query.orientation == Orientation.landscape ? query.size.width * 0.95 : query.size.width * 0.9;
   }
 
 }

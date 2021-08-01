@@ -59,14 +59,20 @@ class JournalScaffoldState extends State<JournalScaffold> {
 
   void setBrightness() {
     AppState appState = context.findAncestorStateOfType<AppState>() as AppState;
-    String brightnessLevel;
-    if (appState.widget.preferences == null){
-      brightnessLevel = 'null';
-    } else {
-      brightnessLevel = appState.widget.preferences.getString('brightness') as String;
-    }
+    var brightnessLevel;
 
-    if (brightnessLevel != 'null') {
+    if (appState.widget.preferences != null) 
+      brightnessLevel = appState.widget.preferences?.getString('brightness');
+
+    /*
+    if (appState.widget.preferences == null){
+      brightnessLevel = null;
+    } else {
+      brightnessLevel = appState.widget.preferences!.getString('brightness')!;
+    }
+    */
+
+    if (brightnessLevel != null) {
       if (brightnessLevel == 'light') {
         setState( () {
           brightness = Brightness.light;
@@ -77,7 +83,7 @@ class JournalScaffoldState extends State<JournalScaffold> {
         });
       }
     } else {
-      appState.widget.preferences.setString('brightness', 'light');
+      appState.widget.preferences!.setString('brightness', 'light');
       setState( () {
         brightness = Brightness.light;
       });

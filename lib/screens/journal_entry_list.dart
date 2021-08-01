@@ -24,9 +24,7 @@ class _JournalEntryListState extends State<JournalEntryList> {
         child: CircularProgressIndicator()
       );
     }
-    return OrientationBuilder(builder: (context, orientation) {
-      return orientation == Orientation.portrait ? VerticalLayout(journal: widget.journal) : HorizontalLayout(journal: widget.journal);
-    });
+    return LayoutBuilder(builder: layoutDecider);
   }
 
   Widget layoutDecider(BuildContext context, BoxConstraints constraints) =>

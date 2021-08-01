@@ -12,7 +12,7 @@ import 'package:journal/widgets/journal_scaffold.dart';
 
 class App extends StatefulWidget {
 
-  final SharedPreferences preferences;
+  SharedPreferences? preferences;
 
   App({Key? key, required this.preferences}) : super(key: key);
 

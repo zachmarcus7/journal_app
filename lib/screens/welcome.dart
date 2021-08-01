@@ -10,7 +10,15 @@ class Welcome extends StatelessWidget {
     return Stack(
       alignment: AlignmentDirectional.bottomEnd,
       children: [
-        Center(child: Icon(Icons.book)),
+        Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.book, size: 90),
+              Text('Journal')
+            ]
+          )
+        ),
         Container(
           margin: EdgeInsets.all(10),
           child: ElevatedButton(
