@@ -64,14 +64,6 @@ class JournalScaffoldState extends State<JournalScaffold> {
     if (appState.widget.preferences != null) 
       brightnessLevel = appState.widget.preferences?.getString('brightness');
 
-    /*
-    if (appState.widget.preferences == null){
-      brightnessLevel = null;
-    } else {
-      brightnessLevel = appState.widget.preferences!.getString('brightness')!;
-    }
-    */
-
     if (brightnessLevel != null) {
       if (brightnessLevel == 'light') {
         setState( () {
