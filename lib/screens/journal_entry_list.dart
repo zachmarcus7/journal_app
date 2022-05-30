@@ -73,7 +73,7 @@ class _VerticalLayoutState extends State<VerticalLayout> {
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               shape: CircleBorder(),
-              primary: Colors.blueAccent
+              primary: Colors.teal
             ),
             onPressed: () => { 
               Navigator.of(context).push(

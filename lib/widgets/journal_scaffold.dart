@@ -30,7 +30,7 @@ class JournalScaffoldState extends State<JournalScaffold> {
     return MaterialApp(
       title: 'Journal Scaffold',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.teal,
         brightness: brightness
       ),
       home: Scaffold(
